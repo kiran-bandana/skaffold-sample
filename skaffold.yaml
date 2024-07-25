@@ -1,0 +1,44 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+build:
+  local:
+    push: true
+  artifacts:
+  - image: <image_name>
+    context: <context_name>
+    docker:      
+      dockerfile: Dockerfile
+deploy:
+  helm:
+    releases:
+    - name: postgresqlsample
+      chartPath: ./helmchart/postgresqlsample
+    - name: mailhogsample
+      chartPath: ./helmchart/mailhogsample
+    - name: redissample
+      chartPath: ./helmchart/redissample
+    - name: celeryworkersample
+      chartPath: ./helmchart/celeryworkersample
+      artifactOverrides:
+          image: <image_name>
+      imageStrategy:
+          helm: {}
+    - name: beatsample
+      chartPath: ./helmchart/beatsample
+      artifactOverrides:
+          image: <image_name>
+      imageStrategy:
+          helm: {}
+
+    - name: rose
+      chartPath: ./helmchart/rose
+      artifactOverrides:
+          image: <image_name>
+      imageStrategy:
+          helm: {}
+    - name: dunsample
+      chartPath: ./helmchart/dunsample
+      artifactOverrides:
+          image: <image_name>
+      imageStrategy:
+          helm: {}
